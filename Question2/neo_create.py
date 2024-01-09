@@ -1,6 +1,9 @@
 import pandas as pd
 from neo4j import GraphDatabase
+import webbrowser
+import time
 
+# neo4j.bat console (需要先使用cmd打开本地neo4j)
 
 uri = "bolt://localhost:7687"
 user = "neo4j"
@@ -22,7 +25,7 @@ def create_relationship(tx, point1, point2):
         point1=point1, point2=point2
     )
 
-df = pd.read_excel(r'C:\Users\11054\Desktop\hust\Question1\point_connections.xlsx')
+df = pd.read_excel(r'..\Question1\point_connections.xlsx')
 # 连接到数据库并创建节点和关系
 with driver.session() as session:
     # 创建所有独特的节点
@@ -40,3 +43,11 @@ with driver.session() as session:
 
 driver.close()
 
+# 等待2秒
+time.sleep(2)
+
+# 自动打开网页
+webbrowser.open('http://localhost:7474/browser/')
+
+# 共有 64 个点， 打开 settings 将Maximum number of nodes to display 改为 64 即可展示所有点信息
+# Relationship types 即每个点与其他点的相连关系
